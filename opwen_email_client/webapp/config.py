@@ -15,6 +15,7 @@ app_basedir = path.abspath(path.dirname(__file__))
 root_domain = env('OPWEN_ROOT_DOMAIN', 'lokole.ca')
 
 
+# noinspection PyPep8Naming
 class ImageDimensions(object):
     MAX_WIDTH_IMAGES = env.int('LOKOLE_MAX_WIDTH_EMAIL_IMAGES', 200)
     MAX_HEIGHT_IMAGES = env.int('LOKOLE_MAX_HEIGHT_EMAIL_IMAGES', 200)

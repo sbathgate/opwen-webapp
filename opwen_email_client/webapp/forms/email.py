@@ -1,4 +1,3 @@
-from copy import deepcopy
 from datetime import datetime
 from io import BytesIO
 from itertools import chain

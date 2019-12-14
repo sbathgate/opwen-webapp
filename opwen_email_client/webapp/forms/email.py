@@ -24,8 +24,8 @@ from opwen_email_client.domain.email.store import EmailStore
 from opwen_email_client.util.wtforms import Emails
 from opwen_email_client.util.wtforms import HtmlTextAreaField
 from opwen_email_client.webapp.config import AppConfig
-from opwen_email_client.webapp.config import i8n
 from opwen_email_client.webapp.config import ImageDimensions
+from opwen_email_client.webapp.config import i8n
 
 
 class NewEmailForm(FlaskForm):

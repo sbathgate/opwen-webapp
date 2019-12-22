@@ -21,6 +21,14 @@
   <fieldset>
     <legend>{{ _('Configure SIM type') }}</legend>
     {{ render_field(form.sim_type) }}
+    
+    <legend>{{ _('Sim Balance / Top-Up') }}
+    <a class="btn btn-link" title="{{ _('Refresh SIM Balance') }}" href="{{ url_for('refresh') }}">
+      <span class="fa fa-cloud-upload" aria-hidden="true"></span>
+    </a>
+  </legend>
+    {{ render_field(form.sim_balance) }}
+    {{ render_field(form.sim_top_up) }}
 
     <legend>{{ _('Configure sync schedule') }}
       <a class="btn btn-link" title="{{ _('Sync emails now (%(number)s pending)', number=num_pending) }}" href="{{ url_for('sync') }}">

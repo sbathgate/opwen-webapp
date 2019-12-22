@@ -229,6 +229,15 @@ def update(version: Optional[str]) -> Response:
     flash(i8n.UPDATE_RUNNING, category='success')
     return redirect(url_for('settings'))
 
+@app.route('/admin/refresh')
+def refresh() -> Response:
+    if not current_user.is_admin:
+        abort(403)
+
+    tasks.refresh.delay()
+
+    flash(i8n.SYNC_RUNNING, category='success')
+    return redirect(url_for('settings'))
 
 @app.route('/user/language/<locale>')
 def language(locale: str) -> Response:
@@ -247,6 +256,20 @@ def users() -> Response:
 
     return _view('users.html', users=user_store.fetch_all())
 
+
+#@app.route('/simbalance')
+#@login_required
+#@track_history
+#def simcard_balance() -> Response:
+    #email_store = app.ioc.user_store
+
+#    form = SettingsForm()
+    #if form.validate_on_submit():
+        #form.update()
+        #flash(i8n.SETTINGS_UPDATED, category='success')
+        #return redirect(url_for('simbalance'))
+
+    #return _view('simcard_balance.html', form=SettingsForm.from_config(), num_pending=email_store.num_pending())
 
 @app.route('/admin/settings', methods=['GET', 'POST'])
 @track_history

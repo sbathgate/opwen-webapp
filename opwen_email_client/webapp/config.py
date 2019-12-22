@@ -55,6 +55,7 @@ class i8n(object):
     ADMIN_PASSWORD_CANNOT_BE_RESET = _("Administrator password can't be " "reset.")
     PASSWORD_CHANGED_BY_ADMIN = _('Password was reset by administrator to: ')
     SAME_PASSWORD = _(' Your new password must be different than your previous password.')
+    SIM_TOP_UP_INSTRUCTIONS = _('Enter the authorisation code to top up the simcard balance.')
 
 
 class AppConfig(object):

@@ -6,6 +6,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField
 from wtforms import SubmitField
 from wtforms import TextAreaField
+from wtforms import SelectField
 
 from opwen_email_client.util.os import replace_line
 from opwen_email_client.util.wtforms import CronSchedule
@@ -18,7 +19,11 @@ from opwen_email_client.webapp.config import settings_path
 class SettingsForm(FlaskForm):
     wvdial = TextAreaField()
 
-    sim_type = StringField()
+    sim_type = SelectField(u'Sim Type', choices=[('hologram', 'Hologram'), ('Ethernet', 'Ethernet'), ('LocalOnly', 'LocalOnly'), ('mkwvconf', 'mkwvconf')])
+
+    sim_balance = StringField()
+
+    sim_top_up = StringField(description=i8n.SIM_TOP_UP_INSTRUCTIONS)
 
     sync_schedule = StringField(validators=[CronSchedule()], description=i8n.SYNC_SCHEDULE_SYNTAX_DESCRIPTION)
 
@@ -33,6 +38,9 @@ class SettingsForm(FlaskForm):
         if restart_required:
             restart_app = RestartApp(restart_paths=AppConfig.RESTART_PATHS)
             restart_app()
+    
+    def refresh(self):
+        return True
 
     def _update_wvdial(self) -> bool:
         wvdial = self.wvdial.data.strip()

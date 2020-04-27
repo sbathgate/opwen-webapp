@@ -74,8 +74,8 @@ class AppConfig(object):
     SECURITY_USER_IDENTITY_ATTRIBUTES = 'email'
     SECURITY_PASSWORD_HASH = 'bcrypt'  # nosec
     SECURITY_PASSWORD_SINGLE_HASH = True
-    SECURITY_REGISTERABLE = True
-    SECURITY_CHANGEABLE = True
+    SECURITY_REGISTERABLE = env.bool('OPWEN_CAN_REGISTER_USER', True)
+    SECURITY_CHANGEABLE = env.bool('OPWEN_CAN_CHANGE_PASSWORD', True)
     SECURITY_TRACKABLE = True
     SECURITY_SEND_PASSWORD_CHANGE_EMAIL = False
     SECURITY_POST_REGISTER_VIEW = 'register_complete'
@@ -100,16 +100,18 @@ class AppConfig(object):
     LOCAL_EMAIL_STORE = path.join(STATE_BASEDIR, 'emails.sqlite3')
     SIM_TYPE = env('OPWEN_SIM_TYPE', None)
     RESTART_PATHS = env.dict('OPWEN_RESTART_PATH', {})
+    MAX_UPLOAD_SIZE_MB = env.int('OPWEN_MAX_UPLOAD_SIZE_MB', 0)
 
     SYNC_SCHEDULE = env('OPWEN_SYNC_SCHEDULE', '').strip()
 
     EMAIL_ADDRESS_DELIMITER = ','
-    EMAILS_PER_PAGE = 10
+    EMAILS_PER_PAGE = env.int('OPWEN_EMAILS_PER_PAGE', 10)
 
     LOCALES_DIRECTORY = path.join(app_basedir, 'translations')
     DEFAULT_LOCALE = Locale.parse('en_ca')
     LOCALES = [DEFAULT_LOCALE] + [Locale.parse(code) for code in subdirectories(LOCALES_DIRECTORY)]
 
+    EMAIL_SEARCHABLE = env.bool('OPWEN_CAN_SEARCH_EMAIL', True)
     COMPRESSION = env('OPWEN_COMPRESSION', 'zstd')
     EMAIL_SERVER_HOSTNAME = env('OPWEN_EMAIL_SERVER_HOSTNAME', None)
     EMAIL_HOST_FORMAT = '{}.' + root_domain
@@ -124,3 +126,8 @@ class AppConfig(object):
     ADMIN_INBOX = 'admin@{}'.format(CLIENT_EMAIL_HOST)
     NEWS_SENDERS = set(env.list('OPWEN_NEWS_SENDERS', []))
     FORBIDDEN_ACCOUNTS = [NEWS_INBOX, ADMIN_INBOX]
+
+    IOC = env('LOKOLE_IOC', 'opwen_email_client.webapp.ioc.Ioc')
+
+    APP_ROOT = env('OPWEN_APP_ROOT', '').rstrip('/')
+    SECURITY_URL_PREFIX = APP_ROOT or None

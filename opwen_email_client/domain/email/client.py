@@ -26,7 +26,7 @@ class HttpEmailServerClient(EmailServerClient):
 
     @property
     def _base_url(self) -> str:
-        return 'http://{hostname}/api/email'.format(hostname=self._hostname)
+        return 'https://{hostname}/api/email'.format(hostname=self._hostname)
 
     @property
     def _upload_url(self) -> str:
@@ -62,9 +62,6 @@ class HttpEmailServerClient(EmailServerClient):
 
 
 class LocalEmailServerClient(EmailServerClient):
-    def __init__(self, *args, **kwargs):
-        pass
-
     def download(self) -> str:
         root = getenv('OPWEN_REMOTE_ACCOUNT_NAME')
         container = getenv('OPWEN_REMOTE_RESOURCE_CONTAINER')
